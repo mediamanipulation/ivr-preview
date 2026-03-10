@@ -1,0 +1,17 @@
+{
+  "callerName": "Sarah",
+  "accountNumber": "4521",
+  "balance": "247.50",
+  "dueDate": "March 15th",
+  "agentName": "Michael",
+  "callbackNumber": "1-800-555-0199",
+  "offerCode": "SAVE20",
+  "appointmentDate": "Wednesday, March 12th",
+  "appointmentTime": "2:30 PM",
+  "doctorName": "Dr. Johnson",
+  "location": "the Downtown Medical Center",
+  "language": "en-US",
+  "isOverdue": false,
+  "isPremiumMember": true,
+  "missedPayments": 0
+}

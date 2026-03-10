@@ -1,0 +1,29 @@
+<speak>
+  Hello{{#if callerName}}, {{callerName}}{{/if}}.
+  {{pause 300}}
+  This is an automated message from your service provider.
+
+  {{#ifGt missedPayments 0}}
+    Our records show that your account ending in {{spellDigits accountNumber}}
+    has {{missedPayments}} missed payment{{#ifGt missedPayments 1}}s{{/ifGt}}.
+    Your current balance is {{speakCurrency balance}}, due on {{dueDate}}.
+    {{pause 400}}
+    To make a payment now, please press 1.
+    To speak with a representative, press 2.
+  {{else}}
+    {{#if isPremiumMember}}
+      As a valued {{pick isPremiumMember "Premium" "Standard"}} member,
+      your account ending in {{spellDigits accountNumber}} is in good standing.
+    {{else}}
+      Your account ending in {{spellDigits accountNumber}} is in good standing.
+    {{/if}}
+    {{pause 300}}
+    Your next payment of {{speakCurrency balance}} is due on {{dueDate}}.
+  {{/ifGt}}
+
+  {{pause 500}}
+  If you have questions, please call us at {{speakPhone callbackNumber}}.
+
+  Thank you for being a {{pick isPremiumMember "Premium" "valued"}} customer.
+  Goodbye.
+</speak>

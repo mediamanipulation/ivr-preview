@@ -1,0 +1,21 @@
+# Exclude from the packaged .vsix — keep installs lean
+
+.vscode/**
+.github/**
+src/**
+.gitignore
+.eslintrc*
+tsconfig.json
+*.map
+node_modules/**
+
+# Keep these IN the package:
+# out/**         ← compiled JS (required)
+# package.json   ← required
+# README.md      ← shown in marketplace
+# CHANGELOG.md   ← shown in marketplace
+# images/**      ← extension icon
+# ivr-helpers.js     ← shipped as starter template
+# ivr-payload.json   ← shipped as starter template
+# example-script.hbs ← shipped as example
+# settings-example.jsonc ← shipped as reference

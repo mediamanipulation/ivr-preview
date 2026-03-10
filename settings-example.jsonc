@@ -1,0 +1,48 @@
+{
+  // ─── IVR Preview Extension Settings ───────────────────────────────────────
+  //
+  // Copy this into your .vscode/settings.json (remove comments for strict JSON)
+  //
+
+  // Path to your JSON payload file (relative to workspace root)
+  "ivrPreview.payloadFile": "./ivr-payload.json",
+
+  // Path to your custom Handlebars helpers file (relative to workspace root)
+  // Leave blank if you have no custom helpers
+  "ivrPreview.helpersFile": "./ivr-helpers.js",
+
+  // ─── Amazon Polly Settings ─────────────────────────────────────────────────
+
+  // AWS region where Polly is available
+  "ivrPreview.aws.region": "us-east-1",
+
+  // Voice ID — neural voices work best for IVR
+  // en-US: Joanna, Matthew, Ruth, Stephen, Ivy, Kendra, Kimberly, Salli, Joey
+  // es-US: Lupe, Pedro
+  // en-GB: Amy, Brian, Emma
+  "ivrPreview.aws.voiceId": "Joanna",
+
+  // Engine: "neural" (best quality), "standard", "long-form", "generative"
+  "ivrPreview.aws.engine": "neural",
+
+  // Language code
+  "ivrPreview.aws.languageCode": "en-US",
+
+  // AWS credentials — leave blank to use the default credential chain:
+  //   1. AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY env vars
+  //   2. ~/.aws/credentials file
+  //   3. EC2/ECS IAM role
+  "ivrPreview.aws.accessKeyId": "",
+  "ivrPreview.aws.secretAccessKey": "",
+
+  // ─── SSML Settings ─────────────────────────────────────────────────────────
+
+  // Auto-detect SSML when rendered output starts with <speak>
+  "ivrPreview.ssmlAutoDetect": true,
+
+  // Wrap rendered output in <speak> tags automatically (if not already SSML)
+  "ivrPreview.wrapInSpeakTags": false,
+
+  // Show the rendered script text in the preview panel
+  "ivrPreview.showRenderedScript": true
+}

@@ -1,0 +1,174 @@
+{
+  "name": "ivr-preview",
+  "displayName": "IVR Preview — Handlebars + Polly",
+  "description": "Render Handlebars IVR/Autocall scripts and preview them via Amazon Polly TTS directly in VS Code",
+  "version": "1.0.0",
+  "publisher": "your-publisher-id",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/ivr-preview.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/ivr-preview/issues"
+  },
+  "homepage": "https://github.com/YOUR_USERNAME/ivr-preview#readme",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#1a1a2e",
+    "theme": "dark"
+  },
+  "engines": { "vscode": "^1.80.0" },
+  "categories": ["Other"],
+  "keywords": ["ivr", "autocall", "handlebars", "amazon polly", "tts", "voice", "ssml", "telephony"],
+  "activationEvents": [
+    "onLanguage:handlebars",
+    "onCommand:ivrPreview.previewDocument",
+    "onCommand:ivrPreview.previewSelection",
+    "onCommand:ivrPreview.showRendered",
+    "onCommand:ivrPreview.pickVoice"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ivrPreview.previewDocument",
+        "title": "IVR Preview: 🔊 Play Full Document",
+        "category": "IVR Preview"
+      },
+      {
+        "command": "ivrPreview.previewSelection",
+        "title": "IVR Preview: 🔊 Play Selection",
+        "category": "IVR Preview"
+      },
+      {
+        "command": "ivrPreview.showRendered",
+        "title": "IVR Preview: 📄 Show Rendered Script",
+        "category": "IVR Preview"
+      },
+      {
+        "command": "ivrPreview.pickVoice",
+        "title": "IVR Preview: 🎙️ Change Voice",
+        "category": "IVR Preview"
+      },
+      {
+        "command": "ivrPreview.reloadPayload",
+        "title": "IVR Preview: 🔄 Reload Payload & Helpers",
+        "category": "IVR Preview"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "ivrPreview.previewDocument",
+        "key": "ctrl+shift+space",
+        "mac": "cmd+shift+space",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "ivrPreview.previewSelection",
+        "key": "ctrl+shift+enter",
+        "mac": "cmd+shift+enter",
+        "when": "editorTextFocus && editorHasSelection"
+      },
+      {
+        "command": "ivrPreview.showRendered",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "editorTextFocus"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "ivrPreview.previewSelection",
+          "when": "editorHasSelection",
+          "group": "ivrPreview@1"
+        },
+        {
+          "command": "ivrPreview.previewDocument",
+          "group": "ivrPreview@2"
+        },
+        {
+          "command": "ivrPreview.showRendered",
+          "group": "ivrPreview@3"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "IVR Preview",
+      "properties": {
+        "ivrPreview.payloadFile": {
+          "type": "string",
+          "default": "./ivr-payload.json",
+          "description": "Path to the JSON payload file (relative to workspace root). Contains dynamic variables for Handlebars rendering."
+        },
+        "ivrPreview.helpersFile": {
+          "type": "string",
+          "default": "",
+          "description": "Path to custom Handlebars helpers JS file (relative to workspace root). Export an object of helpers OR a function(Handlebars) that registers them."
+        },
+        "ivrPreview.aws.region": {
+          "type": "string",
+          "default": "us-east-1",
+          "description": "AWS region for Amazon Polly."
+        },
+        "ivrPreview.aws.voiceId": {
+          "type": "string",
+          "default": "Joanna",
+          "description": "Amazon Polly Voice ID. Neural voices recommended (Joanna, Matthew, Ivy, Kevin, Kendra, Kimberly, Salli, Joey, Justin, Ruth, Stephen)."
+        },
+        "ivrPreview.aws.engine": {
+          "type": "string",
+          "enum": ["neural", "standard", "long-form", "generative"],
+          "default": "neural",
+          "description": "Polly engine type. 'neural' is best for IVR use cases."
+        },
+        "ivrPreview.aws.languageCode": {
+          "type": "string",
+          "default": "en-US",
+          "description": "Language code for synthesis (e.g. en-US, es-US, en-GB)."
+        },
+        "ivrPreview.aws.accessKeyId": {
+          "type": "string",
+          "default": "",
+          "description": "AWS Access Key ID. Leave blank to use the default AWS credential chain (env vars, ~/.aws/credentials, IAM role)."
+        },
+        "ivrPreview.aws.secretAccessKey": {
+          "type": "string",
+          "default": "",
+          "description": "AWS Secret Access Key. Leave blank to use the default credential chain."
+        },
+        "ivrPreview.ssmlAutoDetect": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically detect SSML by checking if rendered output starts with <speak>. Sends as SSML text type when true."
+        },
+        "ivrPreview.wrapInSpeakTags": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically wrap rendered output in <speak></speak> tags when SSML is not auto-detected."
+        },
+        "ivrPreview.showRenderedScript": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the rendered script text in the audio preview panel."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package",
+    "vscode:prepublish": "npm run compile"
+  },
+  "dependencies": {
+    "@aws-sdk/client-polly": "^3.600.0",
+    "handlebars": "^4.7.8"
+  },
+  "devDependencies": {
+    "@types/handlebars": "^4.1.0",
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.4.0"
+  }
+}

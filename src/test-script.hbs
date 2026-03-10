@@ -1,0 +1,82 @@
+<speak>
+
+  {{! ======================================================= }}
+  {{! TEST SCRIPT — IVR Preview Extension                     }}
+  {{! Covers: greetings, conditionals, SSML helpers, pauses,  }}
+  {{!         currency, digits, phone, ordinal, pick          }}
+  {{! ======================================================= }}
+
+  {{! --- GREETING --- }}
+  Hello{{#if callerName}}, <emphasis level="moderate">{{callerName}}</emphasis>{{else}}, valued customer{{/if}}.
+  {{pause 400}}
+  Thank you for calling.
+  {{pause 300}}
+
+  {{! --- ACCOUNT STATUS BRANCH --- }}
+  {{#ifGt missedPayments 0}}
+
+    We are reaching out regarding your account ending in {{spellDigits accountNumber}}.
+    {{pause 300}}
+    Our records show {{missedPayments}} missed
+    {{#ifGt missedPayments 1}}payments{{else}}payment{{/ifGt}}.
+    {{pause 300}}
+    Your outstanding balance is {{speakCurrency balance}},
+    which was due on {{dueDate}}.
+    {{pause 500}}
+
+    To make a payment now, press <say-as interpret-as="cardinal">1</say-as>.
+    {{pause 200}}
+    To set up a payment arrangement, press <say-as interpret-as="cardinal">2</say-as>.
+    {{pause 200}}
+    To speak with a representative, press <say-as interpret-as="cardinal">0</say-as>.
+
+  {{else}}
+
+    {{! --- GOOD STANDING BRANCH --- }}
+    {{#if isPremiumMember}}
+      As a <emphasis level="strong">{{pick isPremiumMember "Premium" "Standard"}}</emphasis> member,
+      we appreciate your loyalty.
+      {{pause 300}}
+    {{/if}}
+
+    Your account ending in {{spellDigits accountNumber}} is in good standing.
+    {{pause 300}}
+    Your next payment of {{speakCurrency balance}} is due on {{dueDate}}.
+    {{pause 500}}
+
+    {{! --- APPOINTMENT REMINDER --- }}
+    {{#if appointmentDate}}
+      You also have an upcoming appointment with {{doctorName}}
+      at {{location}},
+      on {{appointmentDate}} at {{appointmentTime}}.
+      {{pause 400}}
+      To confirm this appointment, press <say-as interpret-as="cardinal">1</say-as>.
+      {{pause 200}}
+      To cancel or reschedule, press <say-as interpret-as="cardinal">2</say-as>.
+      {{pause 200}}
+    {{/if}}
+
+  {{/ifGt}}
+
+  {{! --- OFFER --- }}
+  {{pause 500}}
+  {{#if offerCode}}
+    As a special offer, mention code
+    <say-as interpret-as="spell-out">{{offerCode}}</say-as>
+    to receive an exclusive discount.
+    {{pause 400}}
+  {{/if}}
+
+  {{! --- CALLBACK --- }}
+  If you would like a callback, you can reach us at
+  {{speakPhone callbackNumber}}.
+  {{pause 300}}
+  That number again: {{speakPhone callbackNumber}}.
+  {{pause 500}}
+
+  {{! --- SIGN OFF --- }}
+  Thank you{{#if callerName}}, {{callerName}}{{/if}}.
+  {{pause 200}}
+  Goodbye.
+
+</speak>

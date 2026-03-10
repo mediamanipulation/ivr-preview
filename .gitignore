@@ -1,0 +1,29 @@
+# Compiled output
+out/
+dist/
+
+# Dependencies
+node_modules/
+
+# VS Code extension packaging
+*.vsix
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env / secrets — never commit AWS keys
+.env
+.env.*
+*.env
+
+# Local VS Code settings (keep launch/tasks, ignore personal prefs)
+.vscode/settings.json
+
+# Test output
+.vscode-test/
+coverage/
