@@ -224,6 +224,39 @@ module.exports = (Handlebars) => {
 
 </details>
 
+### Using Custom Helpers
+
+Already have helpers in your IVR system? Point the extension at them — no rewrite needed.
+
+**Step 1** — Set the path in your workspace settings:
+
+```jsonc
+{
+  "ivrPreview.helpersFile": "./path/to/your-helpers.js"
+}
+```
+
+**Step 2** — Make sure the file exports in one of the two patterns above. If your helpers are already a standalone module that exports an object or a registration function, it works as-is.
+
+If your helpers are wired into a larger app (e.g. registered during startup), create a thin wrapper:
+
+```js
+// ivr-helpers.js — wrapper for custom helpers
+const { speakCurrency, speakDate, routeMenu } = require('./lib/ivr/helpers');
+const { formatAccount, formatSSN } = require('./lib/formatting');
+
+module.exports = {
+  speakCurrency,
+  speakDate,
+  routeMenu,
+  formatAccount,
+  formatSSN,
+};
+```
+
+> [!TIP]
+> The helpers file is hot-reloaded on every preview — no extension restart needed. You can iterate on helpers and hear the result immediately.
+
 ---
 
 ## 📦 JSON Payload
