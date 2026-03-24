@@ -19,7 +19,12 @@ module.exports = {
   speakCurrency(amount) {
     const num = parseFloat(amount);
     if (isNaN(num)) return amount;
-    return `<say-as interpret-as="currency" language="en-US">$${num.toFixed(2)}</say-as>`;
+    const dollars = Math.floor(num);
+    const cents = Math.round((num - dollars) * 100);
+    if (cents > 0) {
+      return `<say-as interpret-as="cardinal">${dollars}</say-as> dollars and <say-as interpret-as="cardinal">${cents}</say-as> cents`;
+    }
+    return `<say-as interpret-as="cardinal">${dollars}</say-as> dollars`;
   },
 
   /**

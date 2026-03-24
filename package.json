@@ -17,9 +17,22 @@
     "color": "#1a1a2e",
     "theme": "dark"
   },
-  "engines": { "vscode": "^1.80.0" },
-  "categories": ["Other"],
-  "keywords": ["ivr", "autocall", "handlebars", "amazon polly", "tts", "voice", "ssml", "telephony"],
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "ivr",
+    "autocall",
+    "handlebars",
+    "amazon polly",
+    "tts",
+    "voice",
+    "ssml",
+    "telephony"
+  ],
   "activationEvents": [
     "onLanguage:handlebars",
     "onCommand:ivrPreview.previewDocument",
@@ -53,6 +66,11 @@
       {
         "command": "ivrPreview.reloadPayload",
         "title": "IVR Preview: 🔄 Reload Payload & Helpers",
+        "category": "IVR Preview"
+      },
+      {
+        "command": "ivrPreview.ssmlReference",
+        "title": "IVR Preview: 📖 SSML Reference",
         "category": "IVR Preview"
       }
     ],
@@ -118,7 +136,12 @@
         },
         "ivrPreview.aws.engine": {
           "type": "string",
-          "enum": ["neural", "standard", "long-form", "generative"],
+          "enum": [
+            "neural",
+            "standard",
+            "long-form",
+            "generative"
+          ],
           "default": "neural",
           "description": "Polly engine type. 'neural' is best for IVR use cases."
         },
@@ -156,10 +179,11 @@
     }
   },
   "scripts": {
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "compile": "npm run esbuild",
+    "esbuild": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --sourcemap",
+    "watch": "npm run esbuild -- --watch",
     "package": "vsce package",
-    "vscode:prepublish": "npm run compile"
+    "vscode:prepublish": "npm run esbuild"
   },
   "dependencies": {
     "@aws-sdk/client-polly": "^3.600.0",
@@ -169,6 +193,7 @@
     "@types/handlebars": "^4.1.0",
     "@types/node": "^20.0.0",
     "@types/vscode": "^1.80.0",
+    "esbuild": "^0.27.4",
     "typescript": "^5.4.0"
   }
 }
